@@ -13,10 +13,10 @@ object TripTop extends SparkJob {
 
   override def run(spark: SparkSession, config: UsageConfig, storage: Storage): Unit = {
 
-    val tripData = storage.read(config.inputPath)
+    val tripData = storage.read(config.inputPath, config.inputFormat)
     val res = transform(spark, tripData)
 
-    storage.write(res.limit(10), config.outputPath)
+    storage.write(res.limit(10), config.outputPath, config.outputFormat, config.outputMode)
   }
 
   def transform(spark: SparkSession, data: Dataset[_]): Dataset[_] = {

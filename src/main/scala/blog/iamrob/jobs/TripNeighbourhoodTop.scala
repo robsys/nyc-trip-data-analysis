@@ -11,10 +11,10 @@ object TripNeighbourhoodTop extends SparkJob {
 
   override def run(spark: SparkSession, config: UsageConfig, storage: Storage): Unit = {
 
-    val data = storage.read(config.inputPath)
+    val data = storage.read(config.inputPath, config.inputFormat)
     val res = transform(spark, data)
 
-    storage.write(res.limit(10), config.outputPath)
+    storage.write(res.limit(10), config.outputPath, config.outputFormat, config.outputMode)
   }
 
   def transform(spark: SparkSession, data: Dataset[_]): Dataset[_] = {

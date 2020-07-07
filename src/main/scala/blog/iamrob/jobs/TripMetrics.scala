@@ -12,7 +12,7 @@ object TripMetrics extends SparkJob {
 
   override def run(spark: SparkSession, config: UsageConfig, storage: Storage): Unit = {
 
-    val tripData = storage.read(config.inputPath)
+    val tripData = storage.read(config.inputPath, config.inputFormat)
 
     printMetrics(spark, tripData)
   }
@@ -94,7 +94,8 @@ object TripMetrics extends SparkJob {
     val total = data.count()
     val splits = Array(
       Double.NegativeInfinity,
-      0.0, 2.5, 5.0, 10.0, 20.0, 30.0, 40.0, 50.0, 100.0, 150.0, 250.0,
+      0.0, 2.5, 5.0, 10.0, 20.0, 30.0,
+      40.0, 50.0, 100.0, 150.0, 250.0,
       Double.PositiveInfinity)
 
     val labels = array(Array(
