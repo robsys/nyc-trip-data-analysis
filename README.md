@@ -5,27 +5,27 @@ You can download data from here: https://www1.nyc.gov/site/tlc/about/tlc-trip-re
 Yellow taxi trip records for September of 2019 was used for development and testing.  
 Currently results are written to stdout but the I/O method can be simply switched to another.
 
-![master-status](https://github.com/rob-sys/trip-data-analysis/workflows/master/badge.svg)
+![master-status](https://github.com/rob-sys/nyc-trip-data-analysis/workflows/master/badge.svg)
 ### Jobs
 
 1. `blog.iamrob.jobs.TripMetrics` 
 
    Calculates metrics & dimensions to understand and get familiar with the dataset.  
-   Sample outputs: [TripMetrics.txt](https://github.com/rob-sys/trip-data-analysis/blob/master/output/TripMetrics.txt)  
+   Sample outputs: [TripMetrics.txt](https://github.com/rob-sys/nyc-trip-data-analysis/blob/master/output/TripMetrics.txt)  
    Note: most of the exploration was done via Jupyter notebooks
 
 2. `blog.iamrob.jobs.TripTop`  
 
    Removes trip_distance outliers by using combined dataset features with box-and-whisker outlier detection method.  
    Calculates top 10 PULocationId, DOLocationId pairs for total_amount.  
-   Sample outputs: [TripTop.txt](https://github.com/rob-sys/trip-data-analysis/blob/master/output/TripTop.txt)  
-   Data stats before & after outlier removal: [Outliers.txt](https://github.com/rob-sys/trip-data-analysis/blob/master/output/Outliers.txt)
+   Sample outputs: [TripTop.txt](https://github.com/rob-sys/nyc-trip-data-analysis/blob/master/output/TripTop.txt)  
+   Data stats before & after outlier removal: [Outliers.txt](https://github.com/rob-sys/nyc-trip-data-analysis/blob/master/output/Outliers.txt)
 
 3. `blog.iamrob.jobs.TripNeighbourhoodTop`  
 
    Calculates the same as previous job, but assumes the pair includes values from neighboured numbers,  
    i.e. pair (5,5) includes (4,4), (4,5), (5,4), (5,5), (4,6), (6,4), (5,6), (6,5), (6,6)  
-   Sample outputs: [TripNeighbourhoodTop.txt](https://github.com/rob-sys/trip-data-analysis/blob/master/output/TripNeighbourhoodTop.txt)
+   Sample outputs: [TripNeighbourhoodTop.txt](https://github.com/rob-sys/nyc-trip-data-analysis/blob/master/output/TripNeighbourhoodTop.txt)
    
 
 #### Prerequisites
@@ -61,7 +61,7 @@ spark-submit \
 --master local[*] \
 --conf "spark.driver.extraJavaOptions=-Dlog4j.configuration=file:./log4j.properties" \
 --conf "spark.executor.extraJavaOptions=-Dlog4j.configuration=file:./log4j.properties" \
-./target/scala-2.11/trip-data-analysis-assembly-0.1.0.jar \
+./target/scala-2.11/nyc-trip-data-analysis-assembly-0.1.0.jar \
 --inputPath <b>INPUT_PATH</b>
 </pre>
 

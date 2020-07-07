@@ -1,4 +1,4 @@
-name := "trip-data-analysis"
+name := "nyc-trip-data-analysis"
 version := "0.1.0"
 organization := "blog.iamrob"
 

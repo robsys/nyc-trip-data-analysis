@@ -4,6 +4,6 @@ spark-submit ^
 --master local[*] ^
 --conf "spark.driver.extraJavaOptions=-Dlog4j.configuration=file:./log4j.properties" ^
 --conf "spark.executor.extraJavaOptions=-Dlog4j.configuration=file:./log4j.properties" ^
-./target/scala-2.11/trip-data-analysis-assembly-0.1.0.jar ^
+./target/scala-2.11/nyc-trip-data-analysis-assembly-0.1.0.jar ^
 --inputPath C:/data/bronze/nyc_yellow_taxi/ ^
 --inputFormat orc
