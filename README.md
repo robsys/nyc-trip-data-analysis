@@ -11,8 +11,8 @@ Currently results are written to stdout but the I/O method can be simply switche
 1. `blog.iamrob.jobs.TripDownload`  
    Downloads NYC taxi trips publicly available data set in csv format (from provided URL)  
    Partitions data by `year` and `month` for easier future schema evolution  
-   Writes result to specified location (e.g. hive external table location)
-   For example 2015 and 2018 year data has small schema change: -4 and +2 columns
+   Writes result to specified location (e.g. hive external table location)  
+   For example 2015 and 2018 year data has small schema change: -4 and +2 columns  
    If partitions were changed `MSCK REPAIR TABLE` has to be run to repair them
 
 2. `blog.iamrob.jobs.TripMetrics` 
