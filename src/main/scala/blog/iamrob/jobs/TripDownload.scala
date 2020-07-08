@@ -14,7 +14,7 @@ object TripDownload extends SparkJob {
     val enhancedData = filterOutlierPartitions(spark, tripData)
 
     // partitions will give us an ability to control schema evolution
-    // currenty turned of, but possible to turn on read with .option("mergeSchema", "true")
+    // possible to turn on read with read.<...>.option("mergeSchema", "true")
     // since it's an expensive operation, currently we will keep it turned off
     val formatWriter = (x: DataFrameWriter[_]) => x.partitionBy("year", "month")
     
