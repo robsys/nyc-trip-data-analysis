@@ -5,8 +5,6 @@ import scopt.OptionParser
 case class UsageConfig(
   inputPath: String = "",
   inputFormat: String = "",
-  inputYear: String = "",
-  inputMonth: String = "",
   outputPath: String = "",
   outputFormat: String = "",
   outputMode: String = "")
