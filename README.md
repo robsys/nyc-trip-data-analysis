@@ -73,7 +73,7 @@ spark-submit \
 **NOTE:**  
 1. **Use** `^` instead of `\` for new lines in Windows CMD environment  
 2. **Replace** `CLASS_NAME` with one of the job class name: `TripDownload`, `TripMetrics`, `TripTop`, `TripNeighbourhoodTop`  
-3. **Replace** `INPUT_PATH` with path to the taxi trip data csv file (i.e. `C:/data/yellow_tripdata_2019-09.csv`, `hdfs://...`, `https://nyc-tlc.s3.amazonaws.com/trip+data/yellow_tripdata_2019-09.csv `)  
+3. **Replace** `INPUT_PATH` with path to the data file, in online-api, locally machine, hdfs or any other cluster mounted location (i.e. `C:/data/yellow_tripdata_2019-09.csv`, `hdfs://...`, `https://nyc-tlc.s3.amazonaws.com/trip+data/yellow_tripdata_2019-09.csv `)  
 4. **Replace** `INPUT_FORMAT` with the following: `orc`, `avro`, `parquet`, `csv` or `api-csv` for `TripDownload job`
 5. **Replace** `OUTPUT_PATH` with path to your external hdfs table path or any other mounted location
 6. **Replace** `OUTPUT_FORMAT` with the following: `orc`, `avro`, `parquet`
@@ -109,20 +109,20 @@ Parameters:
   Required: false
 
 --input-path
-  Path or Url to Trip Data File
+  Path or Url to the input data, hdfs or any other mounted location
   Required: true
 
 --input-format
-  Format of the file
-  Allowed values: orc, avro, parquet, csv, api-csv
+  Format of the input data
+  Supported values: orc, avro, parquet, csv, api-csv
   Required: true
 
 --output-path  
-  Path to the output file
+  Path to the output data, hdfs or any other mounted location
   Required: false
 
 --output-format
-  Format of the output file
+  Format of the output data
   Allowed values: orc, avro, parquet
   Required: false
 
