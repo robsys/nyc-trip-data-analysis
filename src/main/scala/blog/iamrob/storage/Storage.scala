@@ -28,9 +28,14 @@ class LocalStorage(spark: SparkSession) extends Storage {
     ds: Dataset[_], path: String, 
     format: String, mode: String,
     formatWriter: DataFrameWriter[_] => DataFrameWriter[_]) : Unit = {
-
-    val writer = ds.write.format(format).mode(mode)    
-    formatWriter(writer).save(path)
+      
+    format match {
+      case "" => ds.show()
+      case _ => {
+        val writer = ds.write.format(format).mode(mode)
+        formatWriter(writer).save(path)
+      }
+    }
   }
 
   private def readCsv[T](path: String)= {

@@ -2,26 +2,32 @@
 
 This project represents Spark jobs which analyze and aggregate NYC taxi trips publicly available data.  
 You can download data from here: https://www1.nyc.gov/site/tlc/about/tlc-trip-record-data.page  
-Yellow taxi trip records for September of 2019 was used for development and testing.  
+Five Yellow taxi trip records datasets (> 2GB) were used for development and testing.  
 Currently results are written to stdout but the I/O method can be simply switched to another.
 
 ![master-status](https://github.com/rob-sys/nyc-trip-data-analysis/workflows/master/badge.svg)
 ### Jobs
 
-1. `blog.iamrob.jobs.TripMetrics` 
+1. `blog.iamrob.jobs.TripDownload`  
+   Downloads NYC taxi trips publicly available data set in csv format (from provided URL)  
+   Partitions data by `year` and `month` for easier future schema evolution  
+   Writes result to specified location  
+   For example 2015 and 2018 year data has small schema changes: -4 and +2 columns
+
+2. `blog.iamrob.jobs.TripMetrics` 
 
    Calculates metrics & dimensions to understand and get familiar with the dataset.  
    Sample outputs: [TripMetrics.txt](https://github.com/rob-sys/nyc-trip-data-analysis/blob/master/output/TripMetrics.txt)  
    Note: most of the exploration was done via Jupyter notebooks
 
-2. `blog.iamrob.jobs.TripTop`  
+3. `blog.iamrob.jobs.TripTop`  
 
    Removes trip_distance outliers by using combined dataset features with box-and-whisker outlier detection method.  
    Calculates top 10 PULocationId, DOLocationId pairs for total_amount.  
    Sample outputs: [TripTop.txt](https://github.com/rob-sys/nyc-trip-data-analysis/blob/master/output/TripTop.txt)  
    Data stats before & after outlier removal: [Outliers.txt](https://github.com/rob-sys/nyc-trip-data-analysis/blob/master/output/Outliers.txt)
 
-3. `blog.iamrob.jobs.TripNeighbourhoodTop`  
+4. `blog.iamrob.jobs.TripNeighbourhoodTop`  
 
    Calculates the same as previous job, but assumes the pair includes values from neighboured numbers,  
    i.e. pair (5,5) includes (4,4), (4,5), (5,4), (5,5), (4,6), (6,4), (5,6), (6,5), (6,6)  
@@ -32,7 +38,7 @@ Currently results are written to stdout but the I/O method can be simply switche
 
 Scala 2.11.11 https://www.scala-lang.org/download/  
 Spark 2.4.0 https://spark.apache.org/downloads.html  
-NYC taxi trips publicly available data: https://nyc-tlc.s3.amazonaws.com/trip+data/yellow_tripdata_2019-09.csv
+NYC taxi trips publicly available data: https://www1.nyc.gov/site/tlc/about/tlc-trip-record-data.page 
 
 ## Instructions
 
@@ -49,11 +55,6 @@ To run unit tests, please, run:
 sbt test
 ```
 To run spark job, please, run:  
-**NOTE:**  
-1. **Use** `^` instead of `\` for new lines in Windows CMD environment  
-2. **Replace** `CLASS_NAME` with one of the job class name: `TripMetrics`, `TripTop`, `TripNeighbourhoodTop`  
-3. **Replace** `INPUT_PATH` with path to the taxi trip data csv file (i.e. `C:/data/yellow_tripdata_2019-09.csv`, `hdfs://...`)  
-4. **IMPORTANT**: If `--deploy-mode cluster` data file has to be loaded to HDFS
 <pre>
 spark-submit \
 --class blog.iamrob.jobs.<b>CLASS_NAME</b> \
@@ -62,8 +63,29 @@ spark-submit \
 --conf "spark.driver.extraJavaOptions=-Dlog4j.configuration=file:./log4j.properties" \
 --conf "spark.executor.extraJavaOptions=-Dlog4j.configuration=file:./log4j.properties" \
 ./target/scala-2.11/nyc-trip-data-analysis-assembly-0.1.0.jar \
---inputPath <b>INPUT_PATH</b>
+--input-path <b>INPUT_PATH</b> \
+--input-format <b>INPUT_FORMAT</b> \
+--output-path <b>OUTPUT_PATH</b> \
+--output-format <b>OUTPUT_FORMAT</b> \
+--output-mode <b>OUTPUT_MODE</b>
 </pre>
+
+**NOTE:**  
+1. **Use** `^` instead of `\` for new lines in Windows CMD environment  
+2. **Replace** `CLASS_NAME` with one of the job class name: `TripDownload`, `TripMetrics`, `TripTop`, `TripNeighbourhoodTop`  
+3. **Replace** `INPUT_PATH` with path to the taxi trip data csv file (i.e. `C:/data/yellow_tripdata_2019-09.csv`, `hdfs://...`, `https://nyc-tlc.s3.amazonaws.com/trip+data/yellow_tripdata_2019-09.csv `)  
+4. **Replace** `INPUT_FORMAT` with the following: `orc`, `avro`, `parquet`, `csv` or `api-csv` for `TripDownload job`
+5. **Replace** `OUTPUT_PATH` with path to your external hdfs table path or any other mounted location
+6. **Replace** `OUTPUT_FORMAT` with the following: `orc`, `avro`, `parquet`
+7. **Replace** `OUTPUT_MODE` with the following: `overwrite` or `append`
+8. **IMPORTANT**: If `--deploy-mode cluster` data file has to be loaded to HDFS or any other mounted location
+9. **If no output-<>** variables specified - will write to stdout
+
+### Sample scripts:  
+1. [TripDownload](https://github.com/rob-sys/nyc-trip-data-analysis/blob/master/scripts/run_1.sh)
+2. [TripMetrics](https://github.com/rob-sys/nyc-trip-data-analysis/blob/master/scripts/run_2.sh)
+3. [TripTop](https://github.com/rob-sys/nyc-trip-data-analysis/blob/master/scripts/run_3.sh)
+4. [TripNeighbourhoodTop](https://github.com/rob-sys/nyc-trip-data-analysis/blob/master/scripts/run_4.sh)
 
 Parameters:
 ```
@@ -86,13 +108,27 @@ Parameters:
   Suppresses spark execution INFO messages in console
   Required: false
 
---inputPath
-  Path to the taxi trip data csv file
+--input-path
+  Path or Url to Trip Data File
   Required: true
 
---outputPath  
+--input-format
+  Format of the file
+  Allowed values: orc, avro, parquet, csv, api-csv
+  Required: true
+
+--output-path  
   Path to the output file
-  Note: currently writes to stdout - not required
+  Required: false
+
+--output-format
+  Format of the output file
+  Allowed values: orc, avro, parquet
+  Required: false
+
+--output-mode
+  Write mode
+  Allowed values: overwrite, append
   Required: false
 ```
 
