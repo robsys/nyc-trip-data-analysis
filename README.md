@@ -33,7 +33,13 @@ Currently results are written to stdout but the I/O method can be simply switche
    Calculates the same as previous job, but assumes the pair includes values from neighboured numbers,  
    i.e. pair (5,5) includes (4,4), (4,5), (5,4), (5,5), (4,6), (6,4), (5,6), (6,5), (6,6)  
    Sample outputs: [TripNeighbourhoodTop.txt](https://github.com/rob-sys/nyc-trip-data-analysis/blob/master/output/TripNeighbourhoodTop.txt)
-   
+
+
+#### Outlier Detection Results
+Comparison of how well estimated price fits in raw and filtered (trip_distance outliers removed) trip data by using linear least squares method for estimating the unknown parameters (price) in a linear regression model.
+[Notebook](https://github.com/rob-sys/nyc-trip-data-analysis/blob/master/images/price_fit_raw_vs_filtered.ipynb)
+
+![price_fit_raw_vs_filtered](https://github.com/rob-sys/nyc-trip-data-analysis/blob/master/images/price_fit_raw_vs_filtered.PNG)
 
 #### Prerequisites
 
