@@ -11,8 +11,9 @@ Currently results are written to stdout but the I/O method can be simply switche
 1. `blog.iamrob.jobs.TripDownload`  
    Downloads NYC taxi trips publicly available data set in csv format (from provided URL)  
    Partitions data by `year` and `month` for easier future schema evolution  
-   Writes result to specified location  
+   Writes result to specified location (e.g. hive external table location)
    For example 2015 and 2018 year data has small schema change: -4 and +2 columns
+   If partitions were changed `MSCK REPAIR TABLE` has to be run to repair them
 
 2. `blog.iamrob.jobs.TripMetrics` 
 
@@ -73,7 +74,7 @@ spark-submit \
 **NOTE:**  
 1. **Use** `^` instead of `\` for new lines in Windows CMD environment  
 2. **Replace** `CLASS_NAME` with one of the job class name: `TripDownload`, `TripMetrics`, `TripTop`, `TripNeighbourhoodTop`  
-3. **Replace** `INPUT_PATH` with path to the data file: online-api, locall machine, hdfs or any other cluster mounted location (i.e. `C:/data/yellow_tripdata_2019-09.csv`, `hdfs://...`, `https://nyc-tlc.s3.amazonaws.com/trip+data/yellow_tripdata_2019-09.csv `)  
+3. **Replace** `INPUT_PATH` with path to the data file: online-api, local machine, hdfs or any other cluster mounted location (i.e. `C:/data/yellow_tripdata_2019-09.csv`, `hdfs://...`, `https://nyc-tlc.s3.amazonaws.com/trip+data/yellow_tripdata_2019-09.csv `)  
 4. **Replace** `INPUT_FORMAT` with the following: `orc`, `avro`, `parquet`, `csv` or `api-csv` for `TripDownload job`
 5. **Replace** `OUTPUT_PATH` with path to your external hdfs table path or any other mounted location
 6. **Replace** `OUTPUT_FORMAT` with the following: `orc`, `avro`, `parquet`
