@@ -9,4 +9,4 @@ spark-submit ^
 --input-format api-csv ^
 --output-path C:/data/bronze/nyc_yellow_taxi/ ^
 --output-format orc ^
---output-mode overwrite
+--output-mode append

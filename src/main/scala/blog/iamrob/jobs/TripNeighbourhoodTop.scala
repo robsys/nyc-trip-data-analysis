@@ -21,11 +21,11 @@ object TripNeighbourhoodTop extends SparkJob {
     import spark.implicits._
 
     // cache dataset since it will be reused multiple times
-    val topTrips = TripTop.transform(spark, data).cache()
-    expandNeighbourhood(topTrips, "PULocationID", "DOLocationID")
+    data.cache()
+    expandNeighbourhood(data, "PULocationID", "DOLocationID")
       .groupBy("PULocationID", "DOLocationID")
       .agg(max("total_amount").alias("neighbourhood_total_amount"))
-      .join(topTrips, usingColumns = Seq("PULocationID", "DOLocationID"), "right")
+      .join(data, usingColumns = Seq("PULocationID", "DOLocationID"), "right")
       .orderBy(desc("neighbourhood_total_amount"), desc("total_amount"))
   }
 
