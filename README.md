@@ -3,7 +3,6 @@
 This project represents Spark jobs which analyze and aggregate NYC taxi trips publicly available data.  
 You can download data from here: https://www1.nyc.gov/site/tlc/about/tlc-trip-record-data.page  
 Five Yellow taxi trip records datasets (> 2GB) were used for development and testing.  
-Currently results are written to stdout but the I/O method can be simply switched to another.
 
 ![master-status](https://github.com/rob-sys/nyc-trip-data-analysis/workflows/master/badge.svg)
 ### Jobs
