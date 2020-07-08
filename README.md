@@ -12,7 +12,7 @@ Currently results are written to stdout but the I/O method can be simply switche
    Downloads NYC taxi trips publicly available data set in csv format (from provided URL)  
    Partitions data by `year` and `month` for easier future schema evolution  
    Writes result to specified location  
-   For example 2015 and 2018 year data has small schema changes: -4 and +2 columns
+   For example 2015 and 2018 year data has small schema change: -4 and +2 columns
 
 2. `blog.iamrob.jobs.TripMetrics` 
 
