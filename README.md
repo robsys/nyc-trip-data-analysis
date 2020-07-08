@@ -36,8 +36,8 @@ Currently results are written to stdout but the I/O method can be simply switche
 
 
 #### Outlier Detection Results
-Comparison of how well estimated price fits in raw and filtered (trip_distance outliers removed) trip data by using linear least squares method for estimating the unknown parameters (price) in a linear regression model.
-[Notebook](https://github.com/rob-sys/nyc-trip-data-analysis/blob/master/images/price_fit_raw_vs_filtered.ipynb)
+Comparison of how well estimated price fits in raw and filtered (trip_distance outliers removed) trip data by using linear least squares method for estimating the unknown parameters (price) in a linear regression model.  
+[Notebook](https://github.com/rob-sys/nyc-trip-data-analysis/blob/master/notebooks/price_fit_raw_vs_filtered.ipynb)
 
 ![price_fit_raw_vs_filtered](https://github.com/rob-sys/nyc-trip-data-analysis/blob/master/images/price_fit_raw_vs_filtered.PNG)
 
