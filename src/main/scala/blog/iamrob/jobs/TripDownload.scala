@@ -41,10 +41,25 @@ object TripDownload extends SparkJob {
 
     // Filter out data which does not belong to the year and month (there are some outliers in most cases)
     // Another approach would be to update the inccorect dates
+    val dataWithPartitions = data
+      .withColumn("year",  expr("year(tpep_pickup_datetime)"))
+      .withColumn("month", expr("month(tpep_pickup_datetime)"))
+
+    val topYear = getTopValueByCount(dataWithPartitions, "year")
+    val topMonth = getTopValueByCount(dataWithPartitions, "month")
+
     data
       .withColumn("year",  expr("year(tpep_pickup_datetime)"))
       .withColumn("month", expr("month(tpep_pickup_datetime)"))
-      .where(f"year = ${config.inputYear} AND month = ${config.inputMonth}")
+      .where(f"year = ${topYear} AND month = ${topMonth}")
   }
 
+  def getTopValueByCount(data: Dataset[_], column: String) = {
+    data
+      .groupBy(column)
+      .count()
+      .orderBy(desc("count"))
+      .limit(1)
+      .collect()(0)(0)
+  }
 }

@@ -15,13 +15,13 @@ class UsageOptionParser
   extends OptionParser[UsageConfig]("job config") {
   head("scopt", "3.x")
 
-  opt[String]('d', "inputPath").required
+  opt[String]('d', "input-path").required
     .action((value, arg) => {
       arg.copy(inputPath = value)
     })
     .text("Path to the taxi trip data csv file")
 
-  opt[String]('d', "inputFormat").required
+  opt[String]('d', "input-format").required
     .action((value, arg) => {
       arg.copy(inputFormat = value)
     })
@@ -31,25 +31,13 @@ class UsageOptionParser
     )
     .text("Input format: orc, parquet, avro, csv")
 
-  opt[String]('d', "inputYear")
-    .action((value, arg) => {
-      arg.copy(inputYear = value)
-    })
-    .text("Year of the dataset")
-
-  opt[String]('d', "inputMonth")
-    .action((value, arg) => {
-      arg.copy(inputMonth = value)
-    })
-    .text("Month of the dataset")
-
-  opt[String]('d', "outputPath")
+  opt[String]('d', "output-path")
     .action((value, arg) => {
       arg.copy(outputPath = value)
     })
     .text("Path to the output file")
 
-  opt[String]('d', "outputFormat")
+  opt[String]('d', "output-format")
     .action((value, arg) => {
       arg.copy(outputFormat = value)
     })
@@ -59,7 +47,7 @@ class UsageOptionParser
     )
     .text("Output format: orc, parquet, avro")
 
-  opt[String]('d', "outputMode")
+  opt[String]('d', "output-mode")
     .action((value, arg) => {
       arg.copy(outputMode = value)
     })
