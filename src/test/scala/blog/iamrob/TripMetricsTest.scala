@@ -1,7 +1,7 @@
 package blog.iamrob
 
-import blog.iamrob.jobs.TripMetrics
 import org.scalatest.FlatSpec
+import blog.iamrob.jobs.TripMetrics
 import blog.iamrob.test.SharedSparkSession.spark
 
 class TripMetricsTest extends TripTest {

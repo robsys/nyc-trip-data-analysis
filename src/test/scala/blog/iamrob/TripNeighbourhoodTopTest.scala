@@ -1,7 +1,7 @@
 package blog.iamrob
 
-import blog.iamrob.jobs.TripNeighbourhoodTop
 import org.scalatest.FlatSpec
+import blog.iamrob.jobs.TripNeighbourhoodTop
 import blog.iamrob.test.SharedSparkSession.spark
 
 class TripNeighbourhoodTopTest extends TripTest {
