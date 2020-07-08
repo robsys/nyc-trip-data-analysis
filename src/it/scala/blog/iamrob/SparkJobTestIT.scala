@@ -26,18 +26,21 @@ class SparkJobTestIT extends FlatSpec {
       formatWriter: DataFrameWriter[_] => DataFrameWriter[_]): Unit = {}
   }
 
+  val config = UsageConfig("src/it/resources/tripdata.csv", "csv")
+
+  "TripDownload" should "read and write to disk" in {
+    TripDownload.run(spark, config, new TestStorage(spark))
+  }
+
   "TripMetrics" should "read from disk" in {
-    val config = UsageConfig("src/it/resources/tripdata.csv", "csv")
     TripMetrics.run(spark, config, new TestStorage(spark))
   }
 
   "TripTop" should "read and write to disk" in {
-    val config = UsageConfig("src/it/resources/tripdata.csv", "csv")
     TripTop.run(spark, config, new TestStorage(spark))
   }
 
   "TripNeighbourhoodTop" should "read and write to disk"  in {
-    val config = UsageConfig("src/it/resources/tripdata.csv", "csv")
     TripNeighbourhoodTop.run(spark, config, new TestStorage(spark))
   }
 }

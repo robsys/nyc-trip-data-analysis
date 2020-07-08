@@ -26,10 +26,10 @@ class UsageOptionParser
       arg.copy(inputFormat = value)
     })
     .validate(x =>
-      if (Array("orc", "parquet", "avro", "csv").contains(x)) success
+      if (Array("orc", "parquet", "avro", "csv", "api-csv").contains(x)) success
       else failure(f"Invalid input format '$x'")
     )
-    .text("Input format: orc, parquet, avro, csv")
+    .text("Input format: orc, parquet, avro, csv, api-csv")
 
   opt[String]('d', "output-path")
     .action((value, arg) => {
